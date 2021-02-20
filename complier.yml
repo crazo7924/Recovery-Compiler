@@ -1,0 +1,2 @@
+- name: Recovery Compiler For Github Actions
+  uses: Area69Lab/Recovery-Compiler@v1.5
