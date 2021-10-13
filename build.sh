@@ -27,7 +27,7 @@ fi
 if [[ -z ${VENDOR} || -z ${CODENAME} ]]; then
     # Assume the workflow runs in the device tree
     # And the naming is exactly like android_device_vendor_codename
-    VenCode=$(echo ${GITHUB_REPOSITORY#*/} | sed 's/android_device_//;s//;')
+    VenCode=$(echo ${GITHUB_REPOSITORY#*/} | sed 's/android_device_//;')
     export VENDOR=$(echo ${VenCode} | cut -d'_' -f1)
     export CODENAME=$(echo ${VenCode} | cut -d'_' -f2-)
     unset VenCode
@@ -137,3 +137,9 @@ echo "::endgroup::"
 echo "::group::Compilation"
 mka ${TARGET} || { printf "Compilation failed.\n"; exit 1; }
 echo "::endgroup::"
+
+# Export VENDOR, CODENAME and BuildPath for next steps
+echo "VENDOR=${VENDOR}" >> ${GITHUB_ENV}
+echo "CODENAME=${CODENAME}" >> ${GITHUB_ENV}
+echo "BuildPath=/home/runner/builder" >> ${GITHUB_ENV}
+
